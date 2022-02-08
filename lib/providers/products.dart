@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shopapp/constants.dart';
+import 'package:http/http.dart' as http;
 
 import './product.dart';
 
@@ -65,6 +67,10 @@ class Products with ChangeNotifier {
   // }
 
   void addProduct(Product product) {
+    final url = Uri.parse('$kUrl/products.json');
+    http.post(url, body: (reosone) {
+
+    }).then((value) =>'' );
     final newProduct = Product(
       title: product.title,
       description: product.description,
