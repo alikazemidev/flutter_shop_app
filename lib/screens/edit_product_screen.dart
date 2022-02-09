@@ -12,8 +12,8 @@ class EditProductScreen extends StatefulWidget {
 }
 
 class _EditProductScreenState extends State<EditProductScreen> {
-  final _priceFocusNode = FocusNode();
-  final _descriptionFocusNode = FocusNode();
+  // final _priceFocusNode = FocusNode();
+  // final _descriptionFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
@@ -30,7 +30,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     'price': '',
     'imageUrl': '',
   };
-  var _isInit = true;
+ 
 
   @override
   void initState() {
@@ -40,11 +40,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   @override
   void didChangeDependencies() {
-    if (_isInit) {
-      final productId = ModalRoute.of(context)!.settings.arguments as String;
+    
+      final productId = ModalRoute.of(context)!.settings.arguments;
       if (productId != null) {
-        _editedProduct =
-            Provider.of<Products>(context, listen: false).findById(productId);
+        _editedProduct = Provider.of<Products>(context, listen: false)
+            .findById(productId as String);
         _initValues = {
           'title': _editedProduct.title!,
           'description': _editedProduct.description!,
@@ -54,16 +54,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
         };
         _imageUrlController.text = _editedProduct.imageUrl!;
       }
-    }
-    _isInit = false;
+ 
+    
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
     _imageUrlFocusNode.removeListener(_updateImageUrl);
-    _priceFocusNode.dispose();
-    _descriptionFocusNode.dispose();
+    // _priceFocusNode.dispose();
+    // _descriptionFocusNode.dispose();
     _imageUrlController.dispose();
     _imageUrlFocusNode.dispose();
     super.dispose();
@@ -119,9 +119,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 initialValue: _initValues['title'],
                 decoration: InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(_priceFocusNode);
-                },
+                // onFieldSubmitted: (_) {
+                //   FocusScope.of(context).requestFocus(_priceFocusNode);
+                // },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please provide a value.';
@@ -143,10 +143,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
-                focusNode: _priceFocusNode,
-                onFieldSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(_descriptionFocusNode);
-                },
+                // focusNode: _priceFocusNode,
+                // onFieldSubmitted: (_) {
+                //   FocusScope.of(context).requestFocus(_descriptionFocusNode);
+                // },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a price.';
@@ -174,7 +174,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
-                focusNode: _descriptionFocusNode,
+                // focusNode: _descriptionFocusNode,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a description.';
